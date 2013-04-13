@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<!-- Reference the Google Maps Javascript API -->
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<script type="text/javascript">
+
+
+/* Test to see if browser supports geolocation and, if so, call the showMap function */
+	if (navigator.geolocation) 
+	
+        navigator.geolocation.getCurrentPosition(showMap,geoError, {enableHighAccuracy: true});
+		
+	else 
+        alert("Geolocation API is not supported in your browser.");
+
+		
+	function showMap(position){
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var coords = new google.maps.LatLng(latitude, longitude);
+        
+		/* Show lat in popup box */
+		alert("Your are here -  Latitude:" + position.coords.latitude + " Longitude:" +position.coords.latitude + "");
+		
+		/* Draw maps and place marker at location */
+		var mapOptions = {
+            zoom: 15,
+            center: coords,
+            mapTypeControl: true,
+            navigationControlOptions: {
+                style: google.maps.NavigationControlStyle.SMALL
+            },
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(
+                document.getElementById("mapContainer"), mapOptions
+                );
+            var marker = new google.maps.Marker({
+                    position: coords,
+                    map: map,
+                    title: "Your current location!"
+            });
+ 
+        
+		}
+		
+/* fuction to handle errors in trying to obtain location */
+function geoError(err) {
+  if (err.code == 1) {
+    alert("permission denied");
+  } 
+  
+  else if
+  
+  (err.code == 2) {
+    alert("location unavailable");
+  } 
+  
+  else {
+	   alert("request timeout");
+	  }
+}
+    
+</script>
+
+
+<!-- Style for the map div -->
+<style type="text/css">
+#mapContainer {
+    height: 500px;
+    width: 800px;
+    border:10px solid #eaeaea;
+}
+</style>
+</head>
+
+<body>
+    <div id="mapContainer"></div>
+</body>
+</html>
